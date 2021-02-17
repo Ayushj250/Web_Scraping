@@ -10,7 +10,17 @@ Created on Wed Jul  3 23:40:51 2019
 from bs4 import BeautifulSoup
 from requests import get
 import pandas as pd
-url='https://www.imdb.com/search/title/?release_date=2018&sort=num_votes,desc&page=1'
+url='https://www.imdb.com/search/title/?release_date=%year&sort=num_votes,desc&page=1'
+year = input('Enter the year-')
+notCorrectYear = True
+while(notCorrectYear):
+    if(len(year)== 4 and year.isnumeric() ):
+        notCorrectYear = False
+    else:
+        print('INVAILD INPUT PLEASE ENTER AGAIN')
+        year = input('Enter the year-')
+        
+url = url.replace('%year', year);
 response=get(url)
 html=BeautifulSoup(response.text,'html.parser')
 movie_containers=html.find_all('div',class_='lister-item mode-advanced')
